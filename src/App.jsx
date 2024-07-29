@@ -25,6 +25,7 @@ import "./App.css";
 // actions
 import { action as LoginAction } from "./pages/Login";
 import { action as RegisterAction } from "./pages/Register";
+import { action as RecipeAction } from "./pages/CreateRecipe";
 
 // layout
 import MainLayout from "./layout/MainLayout";
@@ -69,6 +70,7 @@ function App() {
         {
           path: "recipes",
           element: <CreateRecipe />,
+          action: RecipeAction,
         },
         {
           path: "dashboard",

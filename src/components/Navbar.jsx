@@ -18,7 +18,7 @@ function Navbar() {
   const handleOut = async () => {
     try {
       await signOut(auth);
-      toast.info(
+      toast.success(
         <div>
           <h4>👋 Korishguncha</h4>
         </div>,

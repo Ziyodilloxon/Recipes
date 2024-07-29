@@ -34,7 +34,9 @@ const useLogin = () => {
       dispatch(login(user));
       toast.success(
         <div>
-          <h4>👋 Assalomu alaykum!</h4>
+          <h4 className="text-xl font-semibold ">
+            👋 Assalomu alaykum! {user.displayName}{" "}
+          </h4>
           <p>Xush kelibsiz, siz muvaffaqiyatli tizimga kirdingiz.</p>
         </div>,
         {

@@ -1,6 +1,10 @@
 // rrd imports
 import { Form, Link, useActionData } from "react-router-dom";
 
+// firebase
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
+
 // components
 import { FormInput } from "../components";
 
@@ -14,6 +18,9 @@ import { useEffect, useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 
+// toast
+import toast from "react-hot-toast";
+
 export const action = async ({ request }) => {
   let formData = await request.formData();
   let email = formData.get("email");
@@ -23,6 +30,7 @@ export const action = async ({ request }) => {
 };
 
 function Login() {
+  const [forgetPassword, setForgetPassword] = useState(true);
   const userData = useActionData();
   const { signInWithEmail, isPending } = useLogin();
   const [errors, setErrors] = useState({
@@ -32,7 +40,7 @@ function Login() {
 
   useEffect(() => {
     if (userData) {
-      if (userData.email.trim() && userData.password.trim()) {
+      if (userData?.email.trim() && userData.password?.trim()) {
         signInWithEmail(userData.email, userData.password);
       }
       if (!userData.email.trim()) {
@@ -40,10 +48,20 @@ function Login() {
           return { ...prev, email: "input-error" };
         });
       }
-      if (!userData.password.trim()) {
+      if (!userData.password?.trim()) {
         setErrors((prev) => {
           return { ...prev, password: "input-error" };
         });
+      }
+      if (!forgetPassword && userData) {
+        sendPasswordResetEmail(auth, userData.email.trim())
+          .then(() => {
+            toast.success("Sended a link to your email");
+            setForgetPassword(!forgetPassword);
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
       }
     }
   }, [userData]);
@@ -68,18 +86,24 @@ function Login() {
             status={errors.email}
           />
 
-          <FaKey
-            style={{ position: "absolute", top: "235.3px", left: "30px" }}
-          />
-          <FormInput
-            type="password"
-            name="password"
-            label="Write your password..."
-            status={errors.password}
-          />
+          {forgetPassword && (
+            <FaKey
+              style={{ position: "absolute", top: "235.3px", left: "30px" }}
+            />
+          )}
+          {forgetPassword && (
+            <FormInput
+              type="password"
+              name="password"
+              label="Write your password..."
+              status={errors.password}
+            />
+          )}
           <div className="w-full p-5">
             {!isPending && (
-              <button className="btn btn-primary btn-block">Login</button>
+              <button className="btn btn-primary btn-block">
+                {forgetPassword ? "Login" : "Send link"}
+              </button>
             )}
             {isPending && (
               <button disabled className="btn btn-primary btn-block">
@@ -88,10 +112,21 @@ function Login() {
             )}
           </div>
           <div className="text-center ">
-            Birinchi kirishingizmi ?
+            Is it your first login ?
             <Link className="link link-primary pl-2" to="/register">
               Register
             </Link>
+          </div>
+          <div className="text-center">
+            <p>
+              Forgot password ?{" "}
+              <button
+                onClick={() => setForgetPassword(!forgetPassword)}
+                className="link link-info"
+              >
+                Change password{" "}
+              </button>
+            </p>
           </div>
         </Form>
       </div>
