@@ -6,3 +6,4 @@ export { default as Register } from "./Register";
 export { default as CreateRecipe } from "./CreateRecipe";
 export { default as Dashboard } from "./Dashboard";
 export { default as RecipeDetail } from "./RecipeDetail";
+export { default as Purchases } from "./Purchases";

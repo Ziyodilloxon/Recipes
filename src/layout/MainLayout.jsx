@@ -10,7 +10,7 @@ function MainLayout() {
       <header>
         <Navbar />
       </header>
-      <main className="site-container mt-10">
+      <main className="site-container mt-10 mb-56">
         <Outlet />
       </main>
       <footer>

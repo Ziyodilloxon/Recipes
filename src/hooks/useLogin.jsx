@@ -1,5 +1,9 @@
 // firebase imports
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 
 // slices
@@ -20,8 +24,6 @@ const useLogin = () => {
 
   const signInWithEmail = async (email, password) => {
     setIsPending(true);
-    console.log("Email: ", email);
-    console.log("Password: ", password);
 
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -34,8 +36,8 @@ const useLogin = () => {
       dispatch(login(user));
       toast.success(
         <div>
-          <h4 className="text-xl font-semibold ">
-            👋 Assalomu alaykum! {user.displayName}{" "}
+          <h4 className="text-xl font-semibold">
+            👋 Assalomu alaykum! {user.displayName}
           </h4>
           <p>Xush kelibsiz, siz muvaffaqiyatli tizimga kirdingiz.</p>
         </div>,
@@ -71,7 +73,58 @@ const useLogin = () => {
     }
   };
 
-  return { signInWithEmail, isPending };
+  const signInWithGoogle = async () => {
+    setIsPending(true);
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      console.log("User: ", user);
+      dispatch(login(user));
+      toast.success(
+        <div>
+          <h4 className="text-xl font-semibold">
+            👋 Assalomu alaykum! {user.displayName}
+          </h4>
+          <p>Xush kelibsiz, siz muvaffaqiyatli tizimga kirdingiz.</p>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      setIsPending(false);
+    } catch (error) {
+      console.error("Error: ", error.message);
+      toast.error(
+        <div>
+          <h4>❌ Xatolik!</h4>
+          <p>
+            Google orqali tizimga kirishda xatolik yuz berdi. Iltimos, qaytadan
+            urinib ko'ring.
+          </p>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      setIsPending(false);
+    }
+  };
+
+  return { signInWithEmail, signInWithGoogle, isPending };
 };
 
 export default useLogin;

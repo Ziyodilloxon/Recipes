@@ -12,8 +12,7 @@ import { FormInput } from "../components";
 
 // react icons
 import { MdEmail } from "react-icons/md";
-import { FaImage, FaKey } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaImage, FaKey, FaUser, FaGoogle } from "react-icons/fa";
 
 // Action function
 export const action = async ({ request }) => {
@@ -28,7 +27,7 @@ export const action = async ({ request }) => {
 
 function Register() {
   const userData = useActionData();
-  const { isPending, registerWithEmail } = useRegister();
+  const { isPending, registerWithEmail, registerWithGoogle } = useRegister();
 
   useEffect(() => {
     if (userData) {
@@ -42,57 +41,55 @@ function Register() {
   }, [userData]);
 
   return (
-    <div className="auth-container">
-      <div className="auth-left"></div>
-      <div className="auth-right">
+    <div className="flex min-h-screen">
+      <div className="flex-1 auth-left bg-[url('https://picsum.photos/800/1200')] bg-center bg-no-repeat bg-cover"></div>
+      <div className="flex-1 grid place-items-center min-h-screen">
         <Form
           method="post"
           className="flex flex-col items-center gap-5 card bg-base-100 w-96 shadow-xl p-5"
         >
           <h1 className="text-4xl font-bold italic">Register</h1>
-          <div className="w-full">
-            <div>
-              <MdEmail
-                style={{ position: "absolute", top: "133px", left: "32px" }}
-              />
-              <FormInput
-                type="email"
-                name="email"
-                label="Write your email..."
-              />
-            </div>
-            <div>
-              <FaUser
-                style={{ position: "absolute", top: "216.5px", left: "32px" }}
-              />
-              <FormInput
-                type="text"
-                name="displayName"
-                label="Write your first name..."
-              />
-            </div>
-            <div>
-              <FaKey
-                style={{ position: "absolute", top: "300px", left: "32px" }}
-              />
-              <FormInput
-                type="password"
-                name="password"
-                label="Write your password..."
-              />
-            </div>
-            <div>
-              <FaImage
-                style={{ position: "absolute", top: "385.2px", left: "32px" }}
-              />
-              <FormInput
-                type="url"
-                name="photoURL"
-                label="Put your image url..."
-              />
-            </div>
+          <div className="w-full relative mb-4">
+            <MdEmail
+              style={{ position: "absolute", top: "51px", left: "11.3px" }}
+              className="text-xl"
+            />
+            <FormInput type="email" name="email" label="Write your email..." />
           </div>
-          <div className="w-full p-5">
+          <div className="w-full relative mb-4">
+            <FaUser
+              style={{ position: "absolute", top: "51px", left: "11.3px" }}
+              className="text-xl"
+            />
+            <FormInput
+              type="text"
+              name="displayName"
+              label="Write your first name..."
+            />
+          </div>
+          <div className="w-full relative mb-4">
+            <FaKey
+              style={{ position: "absolute", top: "51px", left: "11.3px" }}
+              className="text-xl"
+            />
+            <FormInput
+              type="password"
+              name="password"
+              label="Write your password..."
+            />
+          </div>
+          <div className="w-full relative mb-4">
+            <FaImage
+              style={{ position: "absolute", top: "51px", left: "11.3px" }}
+              className="text-xl"
+            />
+            <FormInput
+              type="url"
+              name="photoURL"
+              label="Put your image url..."
+            />
+          </div>
+          <div className="w-full px-5">
             {!isPending && (
               <button className="btn btn-primary btn-block">Register</button>
             )}
@@ -102,8 +99,18 @@ function Register() {
               </button>
             )}
           </div>
+          <div className="w-full p-5">
+            <button
+              onClick={registerWithGoogle}
+              className="btn btn-secondary btn-block"
+              disabled={isPending}
+            >
+              <FaGoogle className="mr-2" />
+              {isPending ? "Loading..." : "Sign up with Google"}
+            </button>
+          </div>
           <div className="text-center">
-            Already registered ?{" "}
+            Already registered?{" "}
             <Link className="link link-primary pl-2" to="/login">
               Login
             </Link>

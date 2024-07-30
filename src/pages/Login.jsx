@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 // react icons
 import { MdEmail } from "react-icons/md";
-import { FaKey } from "react-icons/fa";
+import { FaKey, FaGoogle } from "react-icons/fa";
 
 // toast
 import toast from "react-hot-toast";
@@ -32,7 +32,7 @@ export const action = async ({ request }) => {
 function Login() {
   const [forgetPassword, setForgetPassword] = useState(true);
   const userData = useActionData();
-  const { signInWithEmail, isPending } = useLogin();
+  const { signInWithEmail, signInWithGoogle, isPending } = useLogin();
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -67,9 +67,9 @@ function Login() {
   }, [userData]);
 
   return (
-    <div className="auth-container">
-      <div className="auth-left"></div>
-      <div className="bg-[url('https://picsum.photos/1000/1200')] bg-center bg-no-repeat bg-cover lg:bg-none grid place-items-center min-h-screen">
+    <div className="flex min-h-screen">
+      <div className="flex-1 auth-left bg-[url('https://picsum.photos/800/1200')] bg-center bg-no-repeat bg-cover"></div>
+      <div className="flex-1 grid place-items-center min-h-screen">
         <Form
           method="post"
           className="flex flex-col items-center gap-5 card bg-base-100 w-96 shadow-xl p-5"
@@ -77,7 +77,8 @@ function Login() {
           <h1 className="text-4xl font-bold italic">Login</h1>
 
           <MdEmail
-            style={{ position: "absolute", top: "133px", left: "30px" }}
+            style={{ position: "absolute", top: "131.4px", left: "30px" }}
+            className=" text-xl"
           />
           <FormInput
             type="email"
@@ -87,17 +88,18 @@ function Login() {
           />
 
           {forgetPassword && (
-            <FaKey
-              style={{ position: "absolute", top: "235.3px", left: "30px" }}
-            />
-          )}
-          {forgetPassword && (
-            <FormInput
-              type="password"
-              name="password"
-              label="Write your password..."
-              status={errors.password}
-            />
+            <>
+              <FaKey
+                style={{ position: "absolute", top: "232px", left: "30px" }}
+                className=" text-xl"
+              />
+              <FormInput
+                type="password"
+                name="password"
+                label="Write your password..."
+                status={errors.password}
+              />
+            </>
           )}
           <div className="w-full p-5">
             {!isPending && (
@@ -111,7 +113,17 @@ function Login() {
               </button>
             )}
           </div>
-          <div className="text-center ">
+          <div className="w-full px-5">
+            <button
+              onClick={signInWithGoogle}
+              className="btn btn-secondary btn-block"
+              disabled={isPending}
+            >
+              <FaGoogle className="mr-2" />
+              {isPending ? "Loading..." : "Sign in with Google"}
+            </button>
+          </div>
+          <div className="text-center">
             Is it your first login ?
             <Link className="link link-primary pl-2" to="/register">
               Register
@@ -124,7 +136,7 @@ function Login() {
                 onClick={() => setForgetPassword(!forgetPassword)}
                 className="link link-info"
               >
-                Change password{" "}
+                Change password
               </button>
             </p>
           </div>

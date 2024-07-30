@@ -18,6 +18,7 @@ import {
   CreateRecipe,
   Dashboard,
   RecipeDetail,
+  Purchases,
 } from "./pages";
 
 // style
@@ -80,6 +81,10 @@ function App() {
         {
           path: "recipe/:id",
           element: <RecipeDetail />,
+        },
+        {
+          path: "purchases",
+          element: <Purchases />,
         },
       ],
     },

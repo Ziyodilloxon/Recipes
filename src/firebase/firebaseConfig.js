@@ -3,12 +3,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAmmvIyojOPFxMqZ1LfAATgkPS2ikI1kOI",
-  authDomain: "recipes-fd5b9.firebaseapp.com",
-  projectId: "recipes-fd5b9",
-  storageBucket: "recipes-fd5b9.appspot.com",
-  messagingSenderId: "168378768312",
-  appId: "1:168378768312:web:d9e6464a26aaa5e4134d4d",
+  apiKey: "AIzaSyB8TeLfovBC1rmx0nOF9kqnSE4cr3JKfn8",
+  authDomain: "recipes-afc02.firebaseapp.com",
+  projectId: "recipes-afc02",
+  storageBucket: "recipes-afc02.appspot.com",
+  messagingSenderId: "177554736238",
+  appId: "1:177554736238:web:722cc54fe3248e4628527f",
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
