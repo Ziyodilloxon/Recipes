@@ -55,7 +55,7 @@ function Navbar() {
           </Link>
         </div>
         <div className="navbar-center">
-          <ul className="menu menu-horizontal">
+          <ul className="menu menu-horizontal flex gap-5 items-center">
             <NavLinks />
           </ul>
         </div>

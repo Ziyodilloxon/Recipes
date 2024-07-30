@@ -5,3 +5,4 @@ export { default as Login } from "./Login";
 export { default as Register } from "./Register";
 export { default as CreateRecipe } from "./CreateRecipe";
 export { default as Dashboard } from "./Dashboard";
+export { default as RecipeDetail } from "./RecipeDetail";

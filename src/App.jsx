@@ -17,6 +17,7 @@ import {
   Register,
   CreateRecipe,
   Dashboard,
+  RecipeDetail,
 } from "./pages";
 
 // style
@@ -75,6 +76,10 @@ function App() {
         {
           path: "dashboard",
           element: <Dashboard />,
+        },
+        {
+          path: "recipe/:id",
+          element: <RecipeDetail />,
         },
       ],
     },
